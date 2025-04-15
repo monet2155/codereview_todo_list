@@ -1,5 +1,4 @@
-import 'package:codereview_todo_list/model/todo_item.dart';
-
+import '../../model/todo_item.dart';
 class ItemRepository {
   final List<TodoItem>? items;
 
