@@ -5,5 +5,11 @@ class TodoModel {
   int id;
   bool isChecked;
 
-  TodoModel(this.id, this.title, this.memo, this.createdAt, this.isChecked);
+  TodoModel({
+    required this.id,
+    required this.title,
+    required this.memo,
+    required this.createdAt,
+    required this.isChecked,
+  });
 }

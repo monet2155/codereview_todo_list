@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:codereview_todo_list/todo/todo_model.dart';
 import 'package:codereview_todo_list/todo/todo_repository.dart';
 import 'package:codereview_todo_list/todo/todos.dart';
@@ -21,5 +23,16 @@ class TodoLocalRepository implements TodoRepository {
   @override
   void create(TodoModel todo) {
     todos.add(todo);
+  }
+
+  int maxId() {
+    return todos.fold(0, (intiail, e) => max(intiail, e.id)) + 1;
+  }
+
+  @override
+  void modify(TodoModel todo) {
+    final target = todos.firstWhere((e) => e.id == todo.id);
+    target.title = todo.title;
+    target.memo = todo.memo;
   }
 }
