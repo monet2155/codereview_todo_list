@@ -12,18 +12,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<ToDoModel> todoList = [
-    ToDoModel('1', true),
-    ToDoModel('12', false),
-    ToDoModel('13', true),
-    ToDoModel('14', false),
-    ToDoModel('15', true),
-    ToDoModel('16', false),
-  ];
+  final TextEditingController _controller = TextEditingController();
+  List<ToDoModel> todoList = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(centerTitle: true, title: Text("TodoList")),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -43,17 +38,31 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            SizedBox(
-              height: 60,
-              width: double.infinity,
-              child: ElevatedButton(
-                style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.deepPurple)),
-                onPressed: () {
-                  setState(() {
-                    todoList.add(ToDoModel('test', false));
-                  });
-                },
-                child: Text("추가하기", style: TextStyle(color: Colors.white)),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Expanded(flex: 3, child: TextField(controller: _controller, onChanged: (value) => _controller.text = value)),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      height: 50,
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.deepPurple)),
+                        onPressed: () {
+                          setState(() {
+                            if (_controller.text.isNotEmpty) {
+                              todoList.add(ToDoModel(_controller.text, false));
+                              _controller.clear();
+                            }
+                          });
+                        },
+                        child: Text("추가하기", style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
