@@ -1,7 +1,5 @@
-import 'package:codereview_todo_list/model/content.dart';
 import 'package:codereview_todo_list/pages/list_page/list_view_model.dart';
 import 'package:codereview_todo_list/pages/list_page/widgets.dart';
-import 'package:codereview_todo_list/pages/regist_page/regist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
