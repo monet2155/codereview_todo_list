@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddItemPage extends StatefulWidget {
+import '../../model/todo_item.dart';
+import '../../providers/todo_item_providers.dart';
+
+class AddItemPage extends ConsumerStatefulWidget {
   const AddItemPage({super.key});
 
   @override
-  State<AddItemPage> createState() => _AddItemPageState();
+  AddItemPageState createState() => AddItemPageState();
 }
 
-class _AddItemPageState extends State<AddItemPage> {
+class AddItemPageState extends ConsumerState<AddItemPage> {
   final formKey = GlobalKey<FormState>();
+  final titleController = TextEditingController();
+  final noteController = TextEditingController();
+
+  void _submit() {
+    if (formKey.currentState!.validate()) {
+      final newItem = TodoItem(
+        title: titleController.text,
+        note: noteController.text,
+      );
+      ref.read(todoViewModelProvider.notifier).addItem(newItem);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +37,7 @@ class _AddItemPageState extends State<AddItemPage> {
           child: ListView(
             children: [
               TextFormField(
+                controller: titleController,
                 decoration: InputDecoration(
                   hintText: '제목',
                   labelText: '제목',
@@ -32,6 +48,7 @@ class _AddItemPageState extends State<AddItemPage> {
               ),
               SizedBox(height: 20),
               TextFormField(
+                controller: noteController,
                 decoration: InputDecoration(
                   hintText: '내용',
                   labelText: '내용',
@@ -41,6 +58,10 @@ class _AddItemPageState extends State<AddItemPage> {
                 ),
                 maxLines: 5,
               ),
+              SizedBox(height: 60),
+              ElevatedButton(onPressed: _submit,
+                  child: Text("Todo 저장")
+              )
             ],
           ),
         ),
