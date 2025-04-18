@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/todo_item.dart';
-class HomePage extends StatelessWidget {
-   HomePage({super.key});
+import '../providers/todo_item_providers.dart';
 
-  final List<TodoItem> todoItems = [
-    TodoItem(title: "제목1", note: "빨래하기"),
-    TodoItem(title: "제목2", note: "공부하기"),
-    TodoItem(title: "제목3", note: "산책하기"),
-    TodoItem(title: "제목4", note: "숨쉬기 운동"),
-    TodoItem(title: "제목5", note: "자러가기"),
+class HomePage extends ConsumerWidget {
+  const HomePage({super.key});
 
-  ];
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todoItems = ref.watch(todoViewModelProvider);
+
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -21,12 +18,20 @@ class HomePage extends StatelessWidget {
             child: ListView.separated(
               itemBuilder: (context, index) {
                 return ListTile(
+                  leading: Checkbox(
+                    value: todoItems[index].isCompleted,
+                    onChanged: (bool? value) {
+                      ref.read(todoViewModelProvider.notifier).toggleCompletion(index);
+                    },
+                  ),
                   title: Text(todoItems[index].title),
                   subtitle: Text(todoItems[index].note),
                 );
-              }, separatorBuilder: (BuildContext context, int index) {
+              },
+              separatorBuilder: (BuildContext context, int index) {
                 return const Divider();
-            }, itemCount: todoItems.length,
+              },
+              itemCount: todoItems.length,
             ),
           ),
         ],
