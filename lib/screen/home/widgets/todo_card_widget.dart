@@ -1,30 +1,30 @@
+import 'package:codereview_todo_list/model/to_do_model.dart';
 import 'package:flutter/material.dart';
 
 class TodoCardWidget extends StatefulWidget {
   const TodoCardWidget({super.key, required this.todo});
 
-  final String todo;
+  final ToDoModel todo;
 
   @override
   State<TodoCardWidget> createState() => _TodoCardWidgetState();
 }
 
 class _TodoCardWidgetState extends State<TodoCardWidget> {
-  bool isDone = false;
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Row(
         children: [
           Checkbox(
-            value: isDone,
+            value: widget.todo.isDone,
             onChanged: (value) {
               setState(() {
-                isDone = value!;
+                widget.todo.isDone = value!;
               });
             },
           ),
-          Text(widget.todo, style: TextStyle(color: Colors.black, decoration: isDone ? TextDecoration.lineThrough : null)),
+          Text(widget.todo.name, style: TextStyle(color: Colors.black, decoration: widget.todo.isDone ? TextDecoration.lineThrough : null)),
         ],
       ),
     );
