@@ -1,5 +1,6 @@
-import '../model/todo_item.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../model/todo_item.dart';
 
 class HomeState {
   final List<TodoItem>? items;

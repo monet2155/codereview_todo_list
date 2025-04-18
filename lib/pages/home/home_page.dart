@@ -1,7 +1,7 @@
+import 'package:codereview_todo_list/pages/add_item/add_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../model/todo_item.dart';
-import '../providers/todo_item_providers.dart';
+import '../../providers/todo_item_providers.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -12,6 +12,18 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) {
+                return AddItemPage();
+              },
+            ),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
       body: Column(
         children: [
           Expanded(
@@ -21,7 +33,9 @@ class HomePage extends ConsumerWidget {
                   leading: Checkbox(
                     value: todoItems[index].isCompleted,
                     onChanged: (bool? value) {
-                      ref.read(todoViewModelProvider.notifier).toggleCompletion(index);
+                      ref
+                          .read(todoViewModelProvider.notifier)
+                          .toggleCompletion(index);
                     },
                   ),
                   title: Text(todoItems[index].title),
