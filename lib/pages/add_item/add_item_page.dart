@@ -23,6 +23,7 @@ class AddItemPageState extends ConsumerState<AddItemPage> {
         note: noteController.text,
       );
       ref.read(todoViewModelProvider.notifier).addItem(newItem);
+    }
   }
 
   @override
