@@ -31,6 +31,11 @@ class TodoListNotifier extends Notifier<List<TodoModel>> {
     repository.modify(todo);
     state = List.from(repository.getAll());
   }
+
+  void remove(List<int> ids) {
+    repository.deleteByIds(ids);
+    state = List.from(repository.getAll());
+  }
 }
 
 final todoListNotifier = NotifierProvider<TodoListNotifier, List<TodoModel>>(

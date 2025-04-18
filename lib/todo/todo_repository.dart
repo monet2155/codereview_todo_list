@@ -10,4 +10,6 @@ abstract interface class TodoRepository {
   void create(TodoModel todo);
 
   void modify(TodoModel todo);
+
+  void deleteByIds(List<int> ids);
 }

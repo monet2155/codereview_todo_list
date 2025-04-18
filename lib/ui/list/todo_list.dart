@@ -1,3 +1,4 @@
+import 'package:codereview_todo_list/todo/todo_delete_list_view_model.dart';
 import 'package:codereview_todo_list/todo/todo_list_view_model.dart';
 import 'package:codereview_todo_list/todo/todo_local_repository.dart';
 import 'package:codereview_todo_list/todo/todo_model.dart';
@@ -27,6 +28,8 @@ class _TodoListState extends ConsumerState<TodoList> {
   Widget build(BuildContext context) {
     final todos = ref.watch(todoListNotifier);
     final vm = ref.read(todoListNotifier.notifier);
+    final deleteIds = ref.watch(deleteListProvider);
+    final vmDeleteIds = ref.watch(deleteListProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -38,6 +41,8 @@ class _TodoListState extends ConsumerState<TodoList> {
           GestureDetector(
             onTap: () {
               print('삭제 클릭');
+              vm.remove(deleteIds);
+              vmDeleteIds.clear();
             },
             child: Container(
               width: 50,
@@ -71,10 +76,9 @@ class _TodoListState extends ConsumerState<TodoList> {
                 print('롱프레스!!!!!');
                 onLongPressed();
               },
-              child: ListView.separated(
+              child: ListView.builder(
                 itemCount: todos.length,
                 shrinkWrap: true,
-                separatorBuilder: (context, _) => Divider(),
                 itemBuilder: (context, index) {
                   return TodoWidget(todos[index], isDeleteMode);
                 },
@@ -86,3 +90,25 @@ class _TodoListState extends ConsumerState<TodoList> {
     );
   }
 }
+
+
+// body: Column(
+//         children: [
+//           Expanded(
+//             child: GestureDetector(
+//               onLongPress: () {
+//                 print('롱프레스!!!!!');
+//                 onLongPressed();
+//               },
+//               child: ListView.separated(
+//                 itemCount: todos.length,
+//                 shrinkWrap: true,
+//                 separatorBuilder: (context, _) => Divider(),
+//                 itemBuilder: (context, index) {
+//                   return TodoWidget(todos[index], isDeleteMode);
+//                 },
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),

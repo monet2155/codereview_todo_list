@@ -35,4 +35,9 @@ class TodoLocalRepository implements TodoRepository {
     target.title = todo.title;
     target.memo = todo.memo;
   }
+
+  @override
+  void deleteByIds(List<int> ids) {
+    todos.removeWhere((e) => ids.contains(e.id));
+  }
 }
