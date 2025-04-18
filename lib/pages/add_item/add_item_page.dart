@@ -23,6 +23,7 @@ class AddItemPageState extends ConsumerState<AddItemPage> {
         note: noteController.text,
       );
       ref.read(todoViewModelProvider.notifier).addItem(newItem);
+      Navigator.of(context).pop();
     }
   }
 
@@ -46,6 +47,12 @@ class AddItemPageState extends ConsumerState<AddItemPage> {
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
+                validator: (String? text) {
+                  if (text?.trim().isEmpty == true) {
+                    return '제목을 작성해 주세요';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 20),
               TextFormField(
