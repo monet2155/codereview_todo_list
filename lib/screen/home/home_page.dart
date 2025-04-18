@@ -24,11 +24,33 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: todoList.length,
-        itemBuilder: (context, index) {
-          return TodoCardWidget(todo: todoList[index]);
-        },
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: todoList.length,
+                itemBuilder: (context, index) {
+                  return TodoCardWidget(todo: todoList[index]);
+                },
+              ),
+            ),
+            SizedBox(
+              height: 60,
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.deepPurple)),
+                onPressed: () {
+                  setState(() {
+                    todoList.add(ToDoModel('test', false));
+                  });
+                },
+                child: Text("추가하기", style: TextStyle(color: Colors.white)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
