@@ -4,11 +4,14 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ^3.7.2
+  sdk: ^3.7.0
 
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.20.2
+  msh_checkbox: ^2.0.1
+  table_calendar: ^3.2.0
 
 dev_dependencies:
   flutter_test:
