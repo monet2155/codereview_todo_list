@@ -18,6 +18,8 @@ class TodoList extends ConsumerStatefulWidget {
 class _TodoListState extends ConsumerState<TodoList> {
   TodoRepository todoRepository = TodoLocalRepository();
   bool isDeleteMode = false;
+  late final vmDeleteIds = ref.read(deleteListProvider.notifier);
+  late final vm = ref.read(todoListNotifier.notifier);
   void onLongPressed() {
     setState(() {
       isDeleteMode = !isDeleteMode;
@@ -27,9 +29,7 @@ class _TodoListState extends ConsumerState<TodoList> {
   @override
   Widget build(BuildContext context) {
     final todos = ref.watch(todoListNotifier);
-    final vm = ref.read(todoListNotifier.notifier);
     final deleteIds = ref.watch(deleteListProvider);
-    final vmDeleteIds = ref.watch(deleteListProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -64,51 +64,33 @@ class _TodoListState extends ConsumerState<TodoList> {
                 return TodoCreate(null);
               },
             ),
-          );
+          ).then((_) {
+            setState(() {
+              isDeleteMode = !isDeleteMode;
+            });
+          });
         },
         child: Icon(Icons.add),
       ),
       body: Column(
         children: [
           Expanded(
-            child: GestureDetector(
-              onLongPress: () {
-                print('롱프레스!!!!!');
-                onLongPressed();
+            child: ListView.builder(
+              itemCount: todos.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return TodoWidget(
+                  todos[index],
+                  isDeleteMode,
+                  onLongPressed,
+                  key: Key(todos[index].id.toString()),
+                );
               },
-              child: ListView.builder(
-                itemCount: todos.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return TodoWidget(todos[index], isDeleteMode);
-                },
-              ),
             ),
           ),
+          // ),
         ],
       ),
     );
   }
 }
-
-
-// body: Column(
-//         children: [
-//           Expanded(
-//             child: GestureDetector(
-//               onLongPress: () {
-//                 print('롱프레스!!!!!');
-//                 onLongPressed();
-//               },
-//               child: ListView.separated(
-//                 itemCount: todos.length,
-//                 shrinkWrap: true,
-//                 separatorBuilder: (context, _) => Divider(),
-//                 itemBuilder: (context, index) {
-//                   return TodoWidget(todos[index], isDeleteMode);
-//                 },
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),

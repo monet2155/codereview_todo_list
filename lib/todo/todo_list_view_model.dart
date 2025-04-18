@@ -36,6 +36,11 @@ class TodoListNotifier extends Notifier<List<TodoModel>> {
     repository.deleteByIds(ids);
     state = List.from(repository.getAll());
   }
+
+  void setChecked(int id, bool value) {
+    repository.setChecked(id, value);
+    state = List.from(repository.getAll());
+  }
 }
 
 final todoListNotifier = NotifierProvider<TodoListNotifier, List<TodoModel>>(

@@ -40,4 +40,14 @@ class TodoLocalRepository implements TodoRepository {
   void deleteByIds(List<int> ids) {
     todos.removeWhere((e) => ids.contains(e.id));
   }
+
+  void setChecked(int id, bool value) {
+    todos
+        .where((e) {
+          return e.id == id;
+        })
+        .forEach((e) {
+          e.isChecked = value;
+        });
+  }
 }
