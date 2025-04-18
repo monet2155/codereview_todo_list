@@ -32,7 +32,14 @@ class _HomePageState extends State<HomePage> {
               child: ListView.builder(
                 itemCount: todoList.length,
                 itemBuilder: (context, index) {
-                  return TodoCardWidget(todo: todoList[index]);
+                  return TodoCardWidget(
+                    todo: todoList[index],
+                    removeList: () {
+                      setState(() {
+                        todoList.removeAt(index);
+                      });
+                    },
+                  );
                 },
               ),
             ),
